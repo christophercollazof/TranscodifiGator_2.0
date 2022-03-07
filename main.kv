@@ -1,0 +1,61 @@
+#: import ObjectProperty kivy.properties
+
+<Elemento>:
+    text: root.text
+
+    IconRightWidget:
+        icon: 'close'
+        on_release: app.eliminar(self.parent.parent)
+
+
+<Arrastrar>:
+    id: arrastrar
+    text: '\n\n\n\n         Arrastra tus\n         videos aquí'
+    theme_text_color: 'Hint'
+    font_style: 'H4'
+
+
+<Descarga>:
+    id: barra
+    pos_hint: {'center_x':.5}
+    size_hint: .9, .05
+
+
+
+<Raiz>:
+    id: pantalla
+    orientation: 'vertical'
+    gif: gif
+    spacing: '15sp'
+    
+    Gato:
+        id: gif
+        source: 'GatitoFlojo.gif'
+        pos_hint: {'center_x':.5,}
+        nocache: True
+        size: self.size
+        anim_loop: -1
+        anim_delay: .1
+
+    MDLabel:
+        id: video
+        text: ''
+        halign: 'center'
+        valign: 'center'
+        theme_text_color: 'Custom'
+        text_color: 0, 0, 1, 1
+        size_hint: 1, .05
+
+    MDProgressBar:
+        id: progreso
+        pos_hint: {'center_x':.5}
+        size_hint: .9, .05
+
+    ScrollView:
+        MDList:
+            id: lista
+
+            Arrastrar:
+
+
+Raiz:
