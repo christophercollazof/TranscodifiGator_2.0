@@ -37,16 +37,16 @@ def ffmpeg():
         if len(rutas) > 0:
             archivo = rutas[0]
             nombre = path.basename(archivo)
-            print(rutas)
 
             if MDApp.get_running_app().root.gif.source == 'GatitoFlojo.gif':
                 MDApp.get_running_app().root.gif.source = 'GatitoActivo.gif'
                 #MDApp.get_running_app().root.gif.reload()
             
-            for element in MDApp.get_running_app().root.ids.lista.children:                
-                print(element.text,' == ',nombre)
+            for element in MDApp.get_running_app().root.ids.lista.children:
                 if element.text == nombre:
                     MDApp.get_running_app().root.ids.lista.remove_widget(element)
+                    if len(MDApp.get_running_app().root.ids.lista.children) == 0:
+                        MDApp.get_running_app().root.ids.lista.add_widget(Arrastrar())
                     break
 
             MDApp.get_running_app().root.ids.video.text = path.basename(archivo)
@@ -131,15 +131,18 @@ class Descarga(MDProgressBar):
 class TranscodifiGator(MDApp):
     
     Config.set('kivy', 'window_icon', 'Gato.ico')
+    Config.set('graphics', 'resizable',False)
     pantalla = ObjectProperty
     gif = ObjectProperty
     video = ObjectProperty
     progreso = ObjectProperty
     lista = ObjectProperty
+    arras = '\n\n\n\n         Arrastra tus\n         videos aquí'
     dialog = None
     x = 0
     
     def __init__(self, **kwargs):
+        Config.set('kivy', 'window_icon', 'Gato.ico')
         Window.size = (324,500)
         self.title = 'TranscodifiGator'
         self.icon = 'Gatito.ico'
@@ -153,6 +156,8 @@ class TranscodifiGator(MDApp):
 
     def _on_file_drop(self, window, file_path):        
         global rutas
+        if self.root.ids.lista.children[0].text == self.arras:
+            self.root.ids.lista.remove_widget(self.root.ids.lista.children[0])
         archivo = file_path.decode(encoding='UTF-8')
         name, ext = path.splitext(archivo)
         nombre = path.basename(archivo)
